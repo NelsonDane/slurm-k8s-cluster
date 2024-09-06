@@ -1,4 +1,4 @@
-slurmImage: ghcr.io/stackhpc/slurm-docker-cluster:1f51003
+slurmImage: ghcr.io/stackhpc/slurm-k8s-cluster:3c456bd
 
 login:
   # Deployment resource name
@@ -24,8 +24,8 @@ storage:
   # rooknfs.enabled = true below to ensure that Rook NFS is 
   # installed on the cluster as a dependency of this Slurm
   # chart. If you are using a separate RWM StorageClass, then
-  # set rooknfs.enabled = false
-  storageClassName: slurm-rook-nfs
+  # storageClassName: slurm-rook-nfs
+  storageClassName: longhorn
   # Name for the R-W-M volume to provision
   claimName: slurm-shared-storage
   # Capacite of the R-W-M volume
@@ -35,10 +35,11 @@ storage:
 # Values to be passed to the rook-nfs sub-chart
 # See rook-nfs sub-chart for full set of available config values
 rooknfs:
-  enabled: true
+  enabled: false
   # Name given to the RWM StorageClass created by Rook
   # NB this must match storage.storageClassName when using Rook
-  storageClassName: slurm-rook-nfs
+  # storageClassName: slurm-rook-nfs
+  storageClassName: longhorn
   # Name for the NFSServer resource created by Rook
   serverName: rook-nfs
   # Capacity for the backing Read-Write-*Once* volume 
@@ -49,16 +50,16 @@ rooknfs:
   # volume specified in storage.capacity
   storageCapacity: *capacity
   # Storage class to use for the Read-Write-Once backing PVC
-  # backingStorageClass: 
+  backingStorageClass: longhorn
 
 
 
 # Values for Slurm's database container
 database:
-  #Database image to be used
+  # Database image to be used
   image: mariadb:10.10
-  #Storage requested by the var-lib-mysql volume backing the database
-  storage: 100Mi
+  # Storage requested by the var-lib-mysql volume backing the database
+  storage: 1Gi
 
 # Configmap resource names
 configmaps:
@@ -68,7 +69,7 @@ configmaps:
 
 # Public key used for ssh access to the login node
 # If let undefined, assumes you have run the provided publish-keys.sh script to publish your public key prior to deployment
-sshPublicKey:
+sshPublicKey: AAAAC3NzaC1lZDI1NTE5AAAAINFAapmuD0l/rfYUK1fpfgDkrEPQQF2skVLRsmN6P/r6
 
 # Secret resource names
 secrets:
