@@ -69,7 +69,7 @@ configmaps:
 
 # Public key used for ssh access to the login node
 # If let undefined, assumes you have run the provided publish-keys.sh script to publish your public key prior to deployment
-sshPublicKey: AAAAC3NzaC1lZDI1NTE5AAAAINFAapmuD0l/rfYUK1fpfgDkrEPQQF2skVLRsmN6P/r6
+sshPublicKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINFAapmuD0l/rfYUK1fpfgDkrEPQQF2skVLRsmN6P/r6
 
 # Secret resource names
 secrets:
@@ -77,4 +77,4 @@ secrets:
 
 openOnDemand:
   #Password for default Open OnDemand user 'rocky'
-  password: password
+  password: clarkson
